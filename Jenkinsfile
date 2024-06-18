@@ -1,20 +1,43 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'your-docker-registry/jenkins-python:latest'
+            args '-v /root/libs/ImpalaJDBC42.jar:/root/libs/ImpalaJDBC42.jar'
+        }
+    }
+
+    environment {
+        // Define environment variables if needed
+        PYTHON_ENV = '/usr/bin/python3'
+    }
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building..'
+                // Checkout the code from your repository
+                git 'https://github.com/MarWeUMR/jenkins-test.git'
             }
         }
-        stage('Test') {
+        stage('Setup Environment') {
             steps {
-                echo 'Testing..'
+                // Install dependencies, if any
+                sh '''
+                # Activate virtual environment
+                source ${PYTHON_ENV}/bin/activate
+
+                # Install required Python packages
+                pip install jaydebeapi pandas
+                '''
             }
         }
-        stage('Deploy') {
+
+        stage('Run Script') {
             steps {
-                echo 'Deploying....'
+                // Run the Python script
+                sh '''
+                source ${PYTHON_ENV}/bin/activate
+                python main.py
+                '''
             }
         }
     }
