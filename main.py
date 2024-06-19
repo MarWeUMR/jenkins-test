@@ -14,6 +14,9 @@ def impala():
     user = os.getenv('IMPALA_USER')
     password = os.getenv('IMPALA_PASSWORD')
 
+    print(user)
+    print(password)
+
     driver_impala='com.cloudera.impala.jdbc.Driver'
 
     conn_str_impala = (
