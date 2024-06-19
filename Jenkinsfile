@@ -13,6 +13,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/MarWeUMR/jenkins-test.git'
             }
         }
+
         stage('Setup Environment') {
             steps {
                 // Create and activate virtual environment, then install dependencies
@@ -26,13 +27,6 @@ pipeline {
                 # Install required Python packages
                 pip install jaydebeapi pandas
                 '''
-            }
-        }
-
-        stage('Test Network Connectivity') {
-            steps {
-                // Test network connectivity to the Impala server
-                sh 'ping -c 4 cloudera-dev-heavy.cloudera.sva.dev'
             }
         }
 
@@ -50,11 +44,11 @@ pipeline {
                 }
             }
         }
-        post {
+    }
+    post {
             always {
                 // Clean up actions, if any
                 cleanWs()
             }
-        }
     }
 }
