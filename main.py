@@ -6,6 +6,7 @@ import pandas as pd
 def impala():
     # Creates a list of jar files in the /path/to/jar/files/ directory
     jar_files_impala = glob.glob('/root/libs/*.jar')
+    print(jar_files_impala)
 
     host='cloudera-dev-heavy.cloudera.sva.dev'
     port='8443'
