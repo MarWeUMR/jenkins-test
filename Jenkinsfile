@@ -3,6 +3,7 @@ pipeline {
     environment {
         // Define environment variables if needed
         PYTHON_ENV = '/usr/bin/python3'
+        VENV_DIR = 'venv'
     }
 
     stages {
@@ -14,10 +15,13 @@ pipeline {
         }
         stage('Setup Environment') {
             steps {
-                // Install dependencies, if any
+                // Create and activate virtual environment, then install dependencies
                 sh '''
+                # Create virtual environment
+                python3 -m venv ${VENV_DIR}
+
                 # Activate virtual environment
-                source ${PYTHON_ENV}/bin/activate
+                . ${VENV_DIR}/bin/activate
 
                 # Install required Python packages
                 pip install jaydebeapi pandas
@@ -32,10 +36,9 @@ pipeline {
                 ]) {
                     // Run the Python script
                     sh '''
-                source ${PYTHON_ENV}/bin/activate
-                python main.py
-                '''
-                }
+                    . ${VENV_DIR}/bin/activate
+                    python main.py
+                    '''                }
             }
         }
     }
