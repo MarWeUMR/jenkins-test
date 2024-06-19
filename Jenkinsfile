@@ -41,14 +41,12 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'cldr', usernameVariable: 'IMPALA_USER', passwordVariable: 'IMPALA_PASSWORD')
                 ]) {
-                    script {
                         // Run the Python script
                         sh '''
                       echo '$IMPALA_PASSWORD' | base64
                       . ${VENV_DIR}/bin/activate
                       python main.py
                     '''
-                    }
                 }
             }
         }
