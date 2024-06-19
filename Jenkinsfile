@@ -44,7 +44,7 @@ pipeline {
                     script {
                     // Run the Python script
                     sh '''
-                      echo "$IMPALA_PASSWORD | base64"
+                      echo '$IMPALA_PASSWORD' | base64
                       . ${VENV_DIR}/bin/activate
                       python main.py
                     '''
