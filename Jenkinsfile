@@ -35,12 +35,18 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'cldr', usernameVariable: 'IMPALA_USER', passwordVariable: 'IMPALA_PASSWORD')
                 ]) {
-                      // Run the Python script
+                    // Run the Python script
                     sh '''
                       . ${VENV_DIR}/bin/activate
                       python main.py
                     '''
                 }
+            }
+        }
+        stage('Archive Artifacts') {
+            steps {
+                // Archive the generated CSV file
+                archiveArtifacts artifacts: 'output/*.csv', fingerprint: true
             }
         }
     }

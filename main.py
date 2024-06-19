@@ -28,29 +28,37 @@ def impala():
 
     print(conn_str_impala)
 
-    conn_impala = jaydebeapi.connect(
-        driver_impala,
-        conn_str_impala,
-        jars=jar_files_impala,
-    )
+    try:
+        conn_impala = jaydebeapi.connect(
+            driver_impala,
+            conn_str_impala,
+            jars=jar_files_impala,
+        )
 
-    # Create a cursor and execute a query
-    cursor = conn_impala.cursor()
-    cursor.execute('SELECT * FROM sample_data')
+        # Create a cursor and execute a query
+        cursor = conn_impala.cursor()
+        cursor.execute('SELECT * FROM sample_data')
 
-    # Fetch the results
-    results = cursor.fetchall()
+        # Fetch the results
+        results = cursor.fetchall()
 
-    # Get column names
-    columns = [desc[0] for desc in cursor.description]
+        # Get column names
+        columns = [desc[0] for desc in cursor.description]
 
-    # Create a DataFrame for better visualization
-    df = pd.DataFrame(results, columns=columns)
-    print(df)
+        # Create a DataFrame for better visualization
+        df = pd.DataFrame(results, columns=columns)
+        print(df)
 
-    # Close the cursor and connection
-    cursor.close()
-    conn_impala.close()
+        # Write DataFrame to CSV
+        csv_file_path = 'output/results.csv'
+        df.to_csv(csv_file_path, index=False)
+        print(f"Data written to {csv_file_path}")
+
+        # Close the cursor and connection
+        cursor.close()
+        conn_impala.close()
+    except Exception as e:
+        print(f"Error: {e}")
 
 def main():
     impala()
