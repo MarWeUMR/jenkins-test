@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from your repository
-                git 'https://github.com/MarWeUMR/jenkins-test.git'
+                git branch: 'main', url: 'https://github.com/MarWeUMR/jenkins-test.git'
             }
         }
         stage('Setup Environment') {
