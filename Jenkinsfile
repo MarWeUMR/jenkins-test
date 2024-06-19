@@ -25,7 +25,7 @@ pipeline {
                 . ${VENV_DIR}/bin/activate
 
                 # Install required Python packages
-                pip install jaydebeapi pandas
+                pip install jaydebeapi pandas structlog
                 '''
             }
         }

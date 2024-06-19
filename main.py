@@ -1,12 +1,23 @@
 import jaydebeapi
 import glob
 import os
+import stuctlog
 import pandas as pd
 
+# Configure structlog
+structlog.configure(
+    processors=[
+        structlog.processors.KeyValueRenderer(key_order=['event', 'database'])
+    ],
+    context_class=dict,
+    logger_factory=structlog.PrintLoggerFactory()
+)
+log = structlog.get_logger()
+
 def impala():
-    # Creates a list of jar files in the /path/to/jar/files/ directory
+    # Creates a list of jar files in the /home/jenkins/libs/ directory
     jar_files_impala = glob.glob('/home/jenkins/libs/*.jar')
-    print(jar_files_impala)
+    log.info("Jar files loaded", jar_files=jar_files_impala)
 
     host='10.11.4.1'
     port='8443'
@@ -14,8 +25,7 @@ def impala():
     user = os.getenv('IMPALA_USER')
     password = os.getenv('IMPALA_PASSWORD')
 
-    print(user)
-    print(password)
+    log.info("Database credentials", user=user, password=password)
 
     driver_impala='com.cloudera.impala.jdbc.Driver'
 
@@ -26,7 +36,7 @@ def impala():
         f"AllowSelfSignedCerts=1;AllowHostNameCNMismatch=1"
     )
 
-    print(conn_str_impala)
+    log.info("Connection string", connection_string=conn_str_impala)
 
     try:
         conn_impala = jaydebeapi.connect(
@@ -47,7 +57,7 @@ def impala():
 
         # Create a DataFrame for better visualization
         df = pd.DataFrame(results, columns=columns)
-        print(df)
+        log.info("Query results", dataframe_info=df.head().to_dict())
 
         # Define the output directory and file
         output_dir = 'output'
@@ -57,17 +67,16 @@ def impala():
 
         # Write DataFrame to CSV
         df.to_csv(csv_file_path, index=False)
-        print(f"Data written to {csv_file_path}")
+        log.info("Data written to CSV", file_path=csv_file_path)
 
         # Close the cursor and connection
         cursor.close()
         conn_impala.close()
     except Exception as e:
-        print(f"Error: {e}")
+        log.error("Error occurred", exception=str(e))
 
 def main():
     impala()
 
 if __name__ == "__main__":
     main()
-
