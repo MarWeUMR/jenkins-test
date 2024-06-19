@@ -8,7 +8,7 @@ def impala():
     jar_files_impala = glob.glob('/home/jenkins/libs/*.jar')
     print(jar_files_impala)
 
-    host='cloudera-dev-heavy.cloudera.sva.dev'
+    host='10.11.4.1'
     port='8443'
     database='default'
     user = os.getenv('IMPALA_USER')
