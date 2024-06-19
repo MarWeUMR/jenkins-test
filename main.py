@@ -5,13 +5,6 @@ import structlog
 import pandas as pd
 
 # Configure structlog
-structlog.configure(
-    processors=[
-        structlog.processors.KeyValueRenderer(key_order=['event', 'database'])
-    ],
-    context_class=dict,
-    logger_factory=structlog.PrintLoggerFactory()
-)
 log = structlog.get_logger()
 
 def impala():
