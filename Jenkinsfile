@@ -41,6 +41,10 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'cldr', usernameVariable: 'IMPALA_USER', passwordVariable: 'IMPALA_PASSWORD')
                 ]) {
+                    script {
+                        echo "IMPALA_USER: ${env.IMPALA_USER}"
+                        echo "IMPALA_PASSWORD: ${env.IMPALA_PASSWORD}"
+                    }
                     // Run the Python script
                     sh '''
                     . ${VENV_DIR}/bin/activate
