@@ -49,8 +49,13 @@ def impala():
         df = pd.DataFrame(results, columns=columns)
         print(df)
 
+        # Define the output directory and file
+        output_dir = 'output'
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        csv_file_path = os.path.join(output_dir, 'results.csv')
+
         # Write DataFrame to CSV
-        csv_file_path = 'output/results.csv'
         df.to_csv(csv_file_path, index=False)
         print(f"Data written to {csv_file_path}")
 
