@@ -1,7 +1,7 @@
 import jaydebeapi
 import glob
 import os
-import stuctlog
+import structlog
 import pandas as pd
 
 # Configure structlog
