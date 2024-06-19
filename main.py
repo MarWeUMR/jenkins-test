@@ -8,7 +8,7 @@ import pandas as pd
 structlog.configure(
     processors=[
         structlog.processors.add_log_level,
-        structlog.dev.ConsoleRenderer(colors=False),
+        structlog.dev.ConsoleRenderer(colors=True),
     ]
 )
 log = structlog.get_logger()
