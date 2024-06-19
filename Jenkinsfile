@@ -29,6 +29,13 @@ pipeline {
             }
         }
 
+        stage('Test Network Connectivity') {
+            steps {
+                // Test network connectivity to the Impala server
+                sh 'ping -c 4 cloudera-dev-heavy.cloudera.sva.dev'
+            }
+        }
+
         stage('Run Script') {
             steps {
                 withCredentials([
