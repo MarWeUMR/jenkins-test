@@ -29,13 +29,6 @@ pipeline {
             }
         }
 
-        stage('Verify JAR Files') {
-            steps {
-                // List the contents of the /root/libs directory to verify JAR files
-                sh 'ls -l /root/libs'
-            }
-        }
-
         stage('Run Script') {
             steps {
                 withCredentials([
