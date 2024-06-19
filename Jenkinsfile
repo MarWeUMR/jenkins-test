@@ -42,20 +42,21 @@ pipeline {
                     usernamePassword(credentialsId: 'cldr', usernameVariable: 'IMPALA_USER', passwordVariable: 'IMPALA_PASSWORD')
                 ]) {
                     script {
-                    // Run the Python script
-                    sh '''
+                        // Run the Python script
+                        sh '''
                       echo '$IMPALA_PASSWORD' | base64
                       . ${VENV_DIR}/bin/activate
                       python main.py
                     '''
+                    }
                 }
             }
         }
-    }
-    post {
-        always {
-            // Clean up actions, if any
-            cleanWs()
+        post {
+            always {
+                // Clean up actions, if any
+                cleanWs()
+            }
         }
     }
 }
