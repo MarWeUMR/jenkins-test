@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'jenkins-python:latest'
+            image 'jenkins-blueocean:latest'
             args '-v /root/libs/ImpalaJDBC42.jar:/root/libs/ImpalaJDBC42.jar'
         }
     }
