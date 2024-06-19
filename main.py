@@ -47,7 +47,7 @@ def impala():
 
         # Create a cursor and execute a query
         cursor = conn_impala.cursor()
-        cursor.execute('SELECT * FROM sample_data')
+        cursor.execute('SELECT * FROM sample_dat')
 
         # Fetch the results
         results = cursor.fetchall()
@@ -57,7 +57,7 @@ def impala():
 
         # Create a DataFrame for better visualization
         df = pd.DataFrame(results, columns=columns)
-        log.info("Query results", dataframe_info=df.head().to_dict())
+        log.debug("Query results", dataframe_info=df.head().to_dict())
 
         # Define the output directory and file
         output_dir = 'output'
@@ -74,6 +74,7 @@ def impala():
         conn_impala.close()
     except Exception as e:
         log.error("Error occurred", exception=str(e))
+        log.exception("Exception occurred", exception=str(e))
 
 def main():
     impala()
