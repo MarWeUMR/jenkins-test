@@ -9,7 +9,7 @@ def impala():
     print(jar_files_impala)
 
     host='cloudera-dev-heavy.cloudera.sva.dev'
-    port='8443'
+    port='443'
     database='default'
     user = os.getenv('IMPALA_USER')
     password = os.getenv('IMPALA_PASSWORD')
