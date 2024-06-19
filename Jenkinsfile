@@ -4,6 +4,7 @@ pipeline {
         // Define environment variables if needed
         PYTHON_ENV = '/usr/bin/python3'
         VENV_DIR = 'venv'
+        NO_COLOR= "true"
     }
 
     stages {
