@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'your-docker-registry/jenkins-python:latest'
+            image 'jenkins-python:latest'
             args '-v /root/libs/ImpalaJDBC42.jar:/root/libs/ImpalaJDBC42.jar'
         }
     }
@@ -33,12 +33,22 @@ pipeline {
 
         stage('Run Script') {
             steps {
-                // Run the Python script
-                sh '''
+                withCredentials([
+                    usernamePassword(credentialsId: 'cldr', usernameVariable: 'IMPALA_USER', passwordVariable: 'IMPALA_PASSWORD')
+                ]) {
+                    // Run the Python script
+                    sh '''
                 source ${PYTHON_ENV}/bin/activate
                 python main.py
                 '''
+                }
             }
+        }
+    }
+    post {
+        always {
+            // Clean up actions, if any
+            cleanWs()
         }
     }
 }

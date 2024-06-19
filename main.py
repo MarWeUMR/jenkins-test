@@ -1,5 +1,6 @@
 import jaydebeapi
 import glob
+import os
 import pandas as pd
 
 def impala():
@@ -9,6 +10,8 @@ def impala():
     host='cloudera-dev-heavy.cloudera.sva.dev'
     port='8443'
     database='default'
+    user = os.getenv('IMPALA_USER')
+    password = os.getenv('IMPALA_PASSWORD')
 
     driver_impala='com.cloudera.impala.jdbc.Driver'
 
