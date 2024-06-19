@@ -5,6 +5,12 @@ import structlog
 import pandas as pd
 
 # Configure structlog
+structlog.configure(
+    processors=[
+        structlog.processors.add_log_level,
+        structlog.dev.ConsoleRenderer(colors=False),
+    ]
+)
 log = structlog.get_logger()
 
 def impala():
