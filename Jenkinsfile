@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'jenkins-blueocean:latest'
-            args '-v /root/libs/ImpalaJDBC42.jar:/root/libs/ImpalaJDBC42.jar'
-        }
-    }
-
+    agent any
     environment {
         // Define environment variables if needed
         PYTHON_ENV = '/usr/bin/python3'
