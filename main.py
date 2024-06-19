@@ -5,12 +5,6 @@ import structlog
 import pandas as pd
 
 # Configure structlog
-structlog.configure(
-    processors=[
-        structlog.processors.add_log_level,
-        structlog.dev.ConsoleRenderer(colors=False),
-    ]
-)
 log = structlog.get_logger()
 
 def impala():
@@ -46,7 +40,7 @@ def impala():
 
         # Create a cursor and execute a query
         cursor = conn_impala.cursor()
-        cursor.execute('SELECT * FROM sample_dat')
+        cursor.execute('SELECT * FROM sample_data')
 
         # Fetch the results
         results = cursor.fetchall()
